@@ -15,13 +15,15 @@ public class Document {
         if (encoding == null) {
             return;
         }
-        StringBuffer content = new StringBuffer();
+
+        Map<String, String> pageMap = new LinkedHashMap<String, String>();
         BufferedReader reader = null;
         try {
             reader = new BufferedReader(new InputStreamReader(new FileInputStream(new File(filePath)), encoding));
             String line;
+            int rowNum = 0;
             while ((line = reader.readLine()) != null) {
-                content.append(line + "\n");
+                pageMap.put("Row " + (++rowNum), line);
             }
         } catch (UnsupportedEncodingException e) {
             System.out.println(filePath);
@@ -37,8 +39,6 @@ public class Document {
                 e.printStackTrace();
             }
         }
-        Map<String, String> pageMap = new LinkedHashMap<String, String>();
-        pageMap.put("AllPages", content.toString());
         docCache.put(filePath, pageMap);
     }
 }

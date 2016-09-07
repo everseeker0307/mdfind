@@ -95,6 +95,6 @@ public class App {
         String dest = "/Users/everseeker/Telecom/mdfindtest";
         listAndSave(new File(dest));
 
-        showResult(findKeyword("酒后驾驶机动车"));
+        showResult(findKeyword("测试"));
     }
 }
