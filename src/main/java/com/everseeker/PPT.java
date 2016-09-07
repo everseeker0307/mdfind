@@ -28,22 +28,21 @@ public class PPT {
 
     //不按页读取, 直接读取全部.ppt的文本内容
     public static void readFilePPTAllToMemory(String filePath) {
-        PowerPointExtractor extractor = null;
-        try {
-            extractor = new PowerPointExtractor(new FileInputStream(new File(filePath)));
+        Map<String, String> pageMap = new LinkedHashMap<String, String>();
+        try (PowerPointExtractor extractor = new PowerPointExtractor(new FileInputStream(new File(filePath)))) {
+            pageMap.put("AllPages", extractor.getText().toLowerCase());
         } catch (IOException e) {
             e.printStackTrace();
         }
-        Map<String, String> pageMap = new LinkedHashMap<String, String>();
-        pageMap.put("AllPages", extractor.getText());
+
         pptCache.put(filePath, pageMap);
     }
 
     //不按页读取, 直接读取全部.pptx的文本内容
-    public static String readFilePPTXAllToMemory(String filePath) {
-        XSLFPowerPointExtractor extractor = null;
-        try {
-            extractor = new XSLFPowerPointExtractor(new XSLFSlideShow(filePath));
+    public static void readFilePPTXAllToMemory(String filePath) {
+        Map<String, String> pageMap = new LinkedHashMap<String, String>();
+        try (XSLFPowerPointExtractor extractor = new XSLFPowerPointExtractor(new XSLFSlideShow(filePath))) {
+            pageMap.put("AllPages", extractor.getText().toLowerCase());
         } catch (XmlException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -51,14 +50,14 @@ public class PPT {
         } catch (OpenXML4JException e) {
             e.printStackTrace();
         }
-        return extractor.getText();
+
+        pptCache.put(filePath, pageMap);
     }
 
+    // 没成功
     public static void readFilePPTToMemory(String filePath) {
-        try {
-            HSLFSlideShow slideShow = new HSLFSlideShow(new HSLFSlideShowImpl(filePath));
+        try (HSLFSlideShow slideShow = new HSLFSlideShow(new HSLFSlideShowImpl(filePath))) {
             List<HSLFSlide> slides = slideShow.getSlides();
-            List<HSLFNotes> notes = slideShow.getNotes();
             int pageNum = 0;
             Map<String, String> pageMap = new LinkedHashMap<String, String>();
 
@@ -83,8 +82,7 @@ public class PPT {
     }
 
     public static void readFilePPTXToMemory(String filePath) {
-        try {
-            XMLSlideShow xmlSlideShow = new XMLSlideShow(new FileInputStream(new File(filePath)));
+        try (XMLSlideShow xmlSlideShow = new XMLSlideShow(new FileInputStream(new File(filePath)));) {
             List<XSLFSlide> slides = xmlSlideShow.getSlides();
             Map<String, String> pageMap = new LinkedHashMap<String, String>();
             int pageNum = 0;

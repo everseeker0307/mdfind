@@ -16,10 +16,7 @@ public class Excel {
 
     public static void readFileToMemory(String filePath) {
         File file = new File(filePath);
-        try {
-            InputStream is = new FileInputStream(file);
-            //excel文件
-            Workbook book = WorkbookFactory.create(is);
+        try (Workbook book = WorkbookFactory.create(new FileInputStream(file))) {
             int sheetCount = book.getNumberOfSheets();
             for (int sheetNum = 0; sheetNum < sheetCount; sheetNum++) {
                 //sheet表

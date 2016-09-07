@@ -17,13 +17,11 @@ public class Document {
         }
 
         Map<String, String> pageMap = new LinkedHashMap<String, String>();
-        BufferedReader reader = null;
-        try {
-            reader = new BufferedReader(new InputStreamReader(new FileInputStream(new File(filePath)), encoding));
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(new File(filePath)), encoding))) {
             String line;
             int rowNum = 0;
             while ((line = reader.readLine()) != null) {
-                pageMap.put("Row " + (++rowNum), line);
+                pageMap.put("Row " + (++rowNum), line.toLowerCase());
             }
         } catch (UnsupportedEncodingException e) {
             System.out.println(filePath);
@@ -32,13 +30,8 @@ public class Document {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
-        } finally {
-            try {
-                reader.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
         }
+
         docCache.put(filePath, pageMap);
     }
 }

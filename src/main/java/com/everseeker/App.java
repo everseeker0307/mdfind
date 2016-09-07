@@ -75,6 +75,7 @@ public class App {
             //针对不同格式的文件, 分别处理
             for (File file : files) {
                 String filePath = file.getAbsolutePath();
+//                System.out.println(filePath);
                 if (filePath.endsWith(".pdf")) {
                     PDF.readFileToMemory(filePath);
                 } else if (filePath.endsWith(".xls")) {
@@ -83,6 +84,10 @@ public class App {
                     PPT.readFilePPTXToMemory(filePath);
                 } else if (filePath.endsWith(".ppt")) {
                     PPT.readFilePPTAllToMemory(filePath);
+                } else if (filePath.endsWith(".doc")) {
+                    Word.readFileDocToMemory(filePath);
+                } else if (filePath.endsWith(".docx")) {
+                    Word.readFileDocxToMemory(filePath);
                 } else {
                     Document.readFileToMemory(filePath);
                 }
@@ -95,6 +100,6 @@ public class App {
         String dest = "/Users/everseeker/Telecom/mdfindtest";
         listAndSave(new File(dest));
 
-        showResult(findKeyword("测试"));
+        showResult(findKeyword("酒后驾驶"));
     }
 }
