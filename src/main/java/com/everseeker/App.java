@@ -1,15 +1,13 @@
 package com.everseeker;
 
+import com.everseeker.files.*;
+
 import java.io.File;
 import java.io.FileFilter;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.regex.Pattern;
 
-/**
- * Hello world!
- *
- */
 public class App {
     /**
      * 保存文件内容.
@@ -24,18 +22,18 @@ public class App {
     }
 
     //根据关键字查找
-    public static Map<String, Map<String, String>> findKeyword(String keyword) {
+    public static Map<String, Map<String, String>> find(String keyword) {
         Map<String, Map<String, String>> map = new LinkedHashMap<String, Map<String, String>>();
         for (Map.Entry<String, Map<String, String>> file : cache.entrySet()) {
-            Map<String, String> sourceContext = cache.get(file.getKey());
-            Map<String, String> destContext = new LinkedHashMap<String, String>();
-            for (Map.Entry<String, String> entry : sourceContext.entrySet()) {
+            Map<String, String> sourceContent = file.getValue();
+            Map<String, String> destContent = new LinkedHashMap<String, String>();
+            for (Map.Entry<String, String> entry : sourceContent.entrySet()) {
                 if (entry.getValue().indexOf(keyword.toLowerCase()) > -1) {
-                    destContext.put(entry.getKey(), entry.getValue());
+                    destContent.put(entry.getKey(), entry.getValue());
                 }
             }
-            if (!destContext.isEmpty()) {
-                map.put(file.getKey(), destContext);
+            if (!destContent.isEmpty()) {
+                map.put(file.getKey(), destContent);
             }
         }
 
@@ -43,16 +41,16 @@ public class App {
     }
 
     //输出查询结果
-    public static void showResult(Map<String, Map<String, String>> result) {
+    public static void show(Map<String, Map<String, String>> result) {
         if (!result.isEmpty()) {
             for (Map.Entry<String, Map<String, String>> entry : result.entrySet()) {
+                System.out.println("*******************************************************************************");
                 System.out.println(entry.getKey());
                 for (Map.Entry<String, String> page : entry.getValue().entrySet()) {
                     System.out.println(page.getKey());
                     System.out.println(page.getValue());
                     System.out.println("------------------------------------------------------------------");
                 }
-                System.out.println("*******************************************************************************");
             }
         }
     }
@@ -98,8 +96,13 @@ public class App {
     public static void main(String[] args) {
         //保存
         String dest = "/Users/everseeker/Telecom/mdfindtest";
+//        long time1 = System.currentTimeMillis();
         listAndSave(new File(dest));
+//        long time2 = System.currentTimeMillis();
+        show(find("酒后驾驶"));
+//        long time3 = System.currentTimeMillis();
 
-        showResult(findKeyword("酒后驾驶"));
+//        System.out.println(time2 - time1);
+//        System.out.println(time3 - time2);
     }
 }

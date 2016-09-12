@@ -1,5 +1,6 @@
-package com.everseeker;
+package com.everseeker.files;
 
+import com.everseeker.App;
 import org.apache.poi.hslf.extractor.PowerPointExtractor;
 import org.apache.poi.hslf.usermodel.*;
 import org.apache.poi.openxml4j.exceptions.OpenXML4JException;
@@ -81,6 +82,7 @@ public class PPT {
         }
     }
 
+    // 按页读取.pptx中的文本内容
     public static void readFilePPTXToMemory(String filePath) {
         try (XMLSlideShow xmlSlideShow = new XMLSlideShow(new FileInputStream(new File(filePath)));) {
             List<XSLFSlide> slides = xmlSlideShow.getSlides();

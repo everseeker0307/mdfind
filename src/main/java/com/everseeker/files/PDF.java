@@ -1,5 +1,6 @@
-package com.everseeker;
+package com.everseeker.files;
 
+import com.everseeker.App;
 import com.itextpdf.text.pdf.PdfReader;
 import com.itextpdf.text.pdf.parser.PdfTextExtractor;
 
@@ -23,6 +24,7 @@ public class PDF {
             int pageSize = reader.getNumberOfPages();
             for (int i = 1; i <= pageSize; i++) {
                 pageMap.put("Page " + i, PdfTextExtractor.getTextFromPage(reader, i).toLowerCase());
+
             }
         } catch (IOException e) {
             e.printStackTrace();

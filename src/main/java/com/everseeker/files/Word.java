@@ -1,5 +1,6 @@
-package com.everseeker;
+package com.everseeker.files;
 
+import com.everseeker.App;
 import org.apache.poi.hwpf.extractor.WordExtractor;
 import org.apache.poi.xwpf.extractor.XWPFWordExtractor;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
@@ -17,6 +18,7 @@ import java.util.Map;
 public class Word {
     private static Map<String, Map<String, String>> wordCache = App.getCache();
 
+    //读取.doc文档文本内容
     public static void readFileDocToMemory(String filePath) {
         Map<String, String> pageMap = new LinkedHashMap<String, String>();
         try (WordExtractor extractor = new WordExtractor(new FileInputStream(new File(filePath)))) {
@@ -27,6 +29,7 @@ public class Word {
         wordCache.put(filePath, pageMap);
     }
 
+    //读取.docx文档文本内容
     public static void readFileDocxToMemory(String filePath) {
         Map<String, String> pageMap = new LinkedHashMap<String, String>();
         try (XWPFWordExtractor extractor = new XWPFWordExtractor(new XWPFDocument(new FileInputStream(new File(filePath))))) {
@@ -37,9 +40,5 @@ public class Word {
             e.printStackTrace();
         }
         wordCache.put(filePath, pageMap);
-    }
-
-    public static void main(String[] args) {
-        readFileDocxToMemory("/Users/everseeker/Telecom/mdfindtest/aaa/2016安全知识试题及答案.docx");
     }
 }

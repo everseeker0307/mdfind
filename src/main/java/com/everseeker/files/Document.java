@@ -1,4 +1,7 @@
-package com.everseeker;
+package com.everseeker.files;
+
+import com.everseeker.App;
+import com.everseeker.tools.EncodingUtils;
 
 import java.io.*;
 import java.util.LinkedHashMap;
@@ -11,7 +14,8 @@ public class Document {
     private static Map<String, Map<String, String>> docCache = App.getCache();
 
     public static void readFileToMemory(String filePath) {
-        String encoding = EncodingUtils.getFileEncode(filePath);
+//        String encoding = EncodingUtils.getFileEncode(filePath);
+        String  encoding = "UTF-8";
         if (encoding == null) {
             return;
         }
