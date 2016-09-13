@@ -14,8 +14,7 @@ public class Document {
     private static Map<String, Map<String, String>> docCache = App.getCache();
 
     public static void readFileToMemory(String filePath) {
-//        String encoding = EncodingUtils.getFileEncode(filePath);
-        String  encoding = "UTF-8";
+        String encoding = EncodingUtils.getFileEncode(filePath);
         if (encoding == null) {
             return;
         }

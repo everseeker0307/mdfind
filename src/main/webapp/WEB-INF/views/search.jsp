@@ -12,18 +12,20 @@
     <title>Search</title>
 </head>
 <body>
-<form method="post">
-    <input type="text" name="keyword" />
-    <input type="submit" value="搜索" />
-</form>
+<div id="search_div" align="center" style="margin-top: 50px">
+    <form method="post">
+        <input type="text" name="keyword" size="60" />
+        <input type="submit" value="搜索" />
+    </form>
+</div>
 <div id="id1">
     <c:forEach items="${keyFileList}" var="keyFile">
         <hr />
-        <p><c:out value="${keyFile.key}" /></p>
+        <p><h4><c:out value="${keyFile.key}" /></h4></p>
         <div>
             <c:forEach items="${keyFile.value}" var="fileContent">
                 <c:out value="${fileContent.key}" />
-                <p><c:out value="${fileContent.value}" /></p>
+                <p style="font-size: 80%"><c:out value="${fileContent.value}" /></p>
             </c:forEach>
         </div>
     </c:forEach>
@@ -35,7 +37,7 @@
         if (key !== undefined) {
             let content = document.getElementById('id1').innerHTML;
             let regExp = new RegExp(key, 'g');
-            content = content.replace(regExp, '<font color="red"><strong>' + key + '</strong></font>');
+            content = content.replace(regExp, '<span style="font-weight:bold; color:red">' + key + '</span>');
             document.getElementById('id1').innerHTML = content;
             console.log(key);
         }

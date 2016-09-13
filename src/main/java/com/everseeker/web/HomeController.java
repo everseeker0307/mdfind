@@ -27,7 +27,12 @@ public class HomeController {
 
     @RequestMapping(value = "/", method = POST)
     public String home(@RequestParam("filepath") String filepath) {
-        App.listAndSave(new File(filepath));
+        App.clearCache();
+        try {
+            App.listAndSave(new File(new String(filepath.getBytes("iso-8859-1"), "UTF-8")));
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
         return "redirect:/search/";
     }
 
@@ -40,9 +45,11 @@ public class HomeController {
     public String search(@RequestParam("keyword") String keyword, Map model) {
         try {
             //tomcat默认采用ISO-8859-1对中文进行编码, 由于jsp中实际编码格式为utf8, 因此需要重新编码; 也可以直接修改tomcat的默认编码
-            keyword = new String(keyword.getBytes("iso-8859-1"), "UTF-8");
-            model.put("keyFileList", App.find(keyword));
-            model.put("keyword", keyword);
+            keyword = new String(keyword.trim().getBytes("iso-8859-1"), "UTF-8");
+            if (!keyword.equals("")) {
+                model.put("keyFileList", App.find(keyword));
+                model.put("keyword", keyword);
+            }
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }

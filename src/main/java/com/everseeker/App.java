@@ -93,16 +93,14 @@ public class App {
         }
     }
 
-    public static void main(String[] args) {
-        //保存
-        String dest = "/Users/everseeker/Telecom/mdfindtest";
-//        long time1 = System.currentTimeMillis();
-        listAndSave(new File(dest));
-//        long time2 = System.currentTimeMillis();
-        show(find("酒后驾驶"));
-//        long time3 = System.currentTimeMillis();
+    public static void clearCache() {
+        cache.clear();
+    }
 
-//        System.out.println(time2 - time1);
-//        System.out.println(time3 - time2);
+    public static void main(String[] args) {
+        String dest = "/Users/everseeker/Telecom/mdfindtest";
+        listAndSave(new File(dest));
+        show(find("酒后驾驶"));
+        System.out.println("   ".trim().equals(""));
     }
 }
